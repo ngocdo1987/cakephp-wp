@@ -9,11 +9,19 @@
         "cakephp/cakephp": "3.3.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "*"
+        "cakephp/plugin-installer": "*",
+        "friendsofcake/crud": "^4.3",
+        "cakedc/users": "^3.2",
+        "league/oauth2-facebook": "@stable",
+        "league/oauth2-instagram": "@stable",
+        "league/oauth2-google": "@stable",
+        "league/oauth2-linkedin": "@stable",
+        "league/oauth1-client": "@stable",
+        "google/recaptcha": "@stable"
     },
     "require-dev": {
         "psy/psysh": "@stable",
-        "cakephp/debug_kit": "~3.2",
+        "cakephp/debug_kit": "~3.0",
         "cakephp/bake": "~1.1"
     },
     "suggest": {
