@@ -5,7 +5,8 @@ class PostController extends AdminController
 {
 	public function index()
 	{
-		$this->set('title', 'List posts');
+		//$title = 'List posts';
+		//$this->set('title', 'List posts');
 	}
 
 	public function add()

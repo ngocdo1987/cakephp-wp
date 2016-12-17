@@ -11,6 +11,10 @@ class AdminController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->viewBuilder()->layout('admin');
 	}
+
+	public function beforeRender(Event $event)
+    {
+    	$this->viewBuilder()->layout('admin');
+    }
 }
