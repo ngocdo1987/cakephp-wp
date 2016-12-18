@@ -42,4 +42,14 @@ class UsersController extends AppController
 		}
 		$this->set('user', $user);
 	}
+
+	public function login()
+	{
+
+	}
+
+	public function register()
+	{
+		
+	}
 }
