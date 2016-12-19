@@ -76,6 +76,21 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $('select.select2').select2();
+    </script>
+
+    <!-- CKEditor -->
+    <?= $this->Html->script('/js/ckeditor/ckeditor.js') ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            CKEDITOR.replace( 'ckeditor' );
+        });
+    </script>
 </body>
 
 </html>
