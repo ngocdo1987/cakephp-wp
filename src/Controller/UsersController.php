@@ -45,11 +45,11 @@ class UsersController extends AppController
 
 	public function login()
 	{
-
+		die('test login!');
 	}
 
 	public function register()
 	{
-		
+		die('test register!');
 	}
 }
