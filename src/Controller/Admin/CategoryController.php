@@ -1,26 +1,9 @@
 <?php
 namespace App\Controller\Admin;
 
-class CategoryController extends AdminController 
+class CategoryController extends CrudController 
 {
-	public function index()
-	{
-		//$title = 'List posts';
-		//$this->set('title', 'List posts');
-	}
+	protected $singular = 'category';
+	protected $plural = 'categories';
 
-	public function add()
-	{
-
-	}
-
-	public function edit($id = null)
-	{
-
-	}
-
-	public function delete($id = null)
-	{
-
-	}
 }

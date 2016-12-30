@@ -44,10 +44,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <?php if($this->Flash->render()) : ?>
+                            <div class="alert alert-info alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> 
+                                <?= h($this->Flash->render()) ?>
+                            </div>
+                        <?php endif; ?>
+
                         <h1 class="page-header"><?= $this->fetch('title') ?></h1>
-
-                        <?= $this->Flash->render() ?>
-
+                        
                         <?= $this->fetch('content') ?>
                     </div>
                     <!-- /.col-lg-12 -->

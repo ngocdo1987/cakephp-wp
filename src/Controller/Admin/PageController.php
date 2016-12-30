@@ -1,26 +1,9 @@
 <?php
 namespace App\Controller\Admin;
 
-class PageController extends AdminController 
+class PageController extends CrudController 
 {
-	public function index()
-	{
-		//$title = 'List posts';
-		//$this->set('title', 'List posts');
-	}
+	protected $singular = 'page';
+	protected $plural = 'pages';
 
-	public function add()
-	{
-
-	}
-
-	public function edit($id = null)
-	{
-
-	}
-
-	public function delete($id = null)
-	{
-
-	}
 }

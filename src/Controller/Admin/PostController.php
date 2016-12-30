@@ -1,26 +1,9 @@
 <?php
 namespace App\Controller\Admin;
 
-class PostController extends AdminController 
+class PostController extends CrudController 
 {
-	public function index()
-	{
-		//$title = 'List posts';
-		//$this->set('title', 'List posts');
-	}
+	protected $singular = 'post';
+	protected $plural = 'posts';
 
-	public function add()
-	{
-
-	}
-
-	public function edit($id = null)
-	{
-
-	}
-
-	public function delete($id = null)
-	{
-
-	}
 }
