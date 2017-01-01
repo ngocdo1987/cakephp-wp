@@ -20,6 +20,7 @@ class CrudController extends AdminController
 		{
 			$config = null;
 		}
+		
 		$this->config = $config;
 	}
 
@@ -47,6 +48,8 @@ class CrudController extends AdminController
 
 	    $this->set('crud', $crud);
 	    $this->set('_serialize', ['crud']);
+
+	    $this->render('/Admin/Crud/view');
 	}
 
 	public function add()

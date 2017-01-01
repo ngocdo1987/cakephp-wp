@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?= $this->fetch('title') ?> | Admin area</title>
+    <title><?= $this->fetch('title') ?> | CakePHP Admin</title>
 
     <!-- Bootstrap Core CSS -->
     <?= $this->Html->css('/admin/vendor/bootstrap/css/bootstrap.min.css') ?>
