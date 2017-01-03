@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller\Admin;
 
+use Cake\ORM\TableRegistry;
+
 class CrudController extends AdminController 
 {
 	protected $singular = '';
@@ -67,9 +69,31 @@ class CrudController extends AdminController
 	      	}
 	    }
 
+	    $config = $this->config;
 	    $this->set('crud', $crud);
-	    $this->set('config', $this->config);
+	    $this->set('config', $config);
 	    $this->set('singular', $this->singular);
+
+	    // Check recursive
+		if(isset($config->recursive) && $config->recursive == 1)
+		{
+
+		}
+
+		// Check 1-n
+
+		// Check n-n
+		if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+		{
+			foreach($config->relation->nn as $k => $v)
+			{
+				$model = ucfirst($k);
+				$kk = TableRegistry::get(ucfirst($k))->find();
+
+				$this->set($k, $kk);
+			}
+		}
+
 	    $this->render('/Admin/Crud/add');
 	}
 
@@ -79,19 +103,41 @@ class CrudController extends AdminController
 		$crud = $this->$model->get($id);
 
 	    if ($this->request->is(['patch', 'post', 'put'])) {
-	      $crud = $this->$model->patchEntity($crud, $this->request->data);
-	      if ($this->$model->save($crud)) {
-	        $this->Flash->success(__('Edit '.$this->singular.' successfully!'));
-	        return $this->redirect(['action' => 'index']);
-	      } else {
-	        $this->Flash->error(__('Edit '.$this->singular.' failed! Please try again!'));
-	      }
+	      	$crud = $this->$model->patchEntity($crud, $this->request->data);
+	      	if ($this->$model->save($crud)) {
+	        	$this->Flash->success(__('Edit '.$this->singular.' successfully!'));
+	        	return $this->redirect(['action' => 'index']);
+	      	} else {
+	        	$this->Flash->error(__('Edit '.$this->singular.' failed! Please try again!'));
+	      	}
 	    }
 
+	    $config = $this->config;
 	    $this->set('crud', $crud);
-	    $this->set('config', $this->config);
+	    $this->set('config', $config);
 	    $this->set('singular', $this->singular);
 	    $this->set('_serialize', ['crud']);
+
+	    // Check recursive
+		if(isset($config->recursive) && $config->recursive == 1)
+		{
+
+		}
+
+		// Check 1-n
+
+		// Check n-n
+		if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+		{
+			foreach($config->relation->nn as $k => $v)
+			{
+				$model = ucfirst($k);
+				$kk = TableRegistry::get(ucfirst($k))->find();
+				
+				$this->set($k, $kk);
+			}
+		}
+
 	    $this->render('/Admin/Crud/edit');
 	}
 
