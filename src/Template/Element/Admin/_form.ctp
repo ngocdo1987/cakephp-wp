@@ -22,6 +22,9 @@
 								case 'tinymce':
 									echo $this->Form->textarea($k, ['class' => 'form-control', 'id' => 'tinymce']);
 									break;
+								case 'summernote':
+									echo $this->Form->textarea($k, ['class' => 'form-control summernote']);
+									break;	
 								case 'select':
 									echo $this->Form->select($k, $v->value, ['class' => 'form-control select2']);
 									break;
