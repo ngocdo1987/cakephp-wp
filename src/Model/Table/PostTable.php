@@ -24,6 +24,14 @@ class PostTable extends Table
 
     public function validationDefault(Validator $validator)
     {
+        $validator->notEmpty('post_title')
+                ->add('post_title', [
+                    'length' => [
+                        'rule' => ['minLength', 3],
+                        'message' => 'Min length of post title is 3.'
+                    ]
+                ]);
+
         return $validator;
     }
 }
