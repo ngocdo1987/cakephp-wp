@@ -34,7 +34,7 @@ class PageTable extends Table
             'unique' => [
                 'rule' => 'validateUnique',
                 'provider' => 'table',
-                'message' => 'Page slug has already been taken.'
+                'message' => __('Page slug has already been taken.')
             ]
         ]);
 

@@ -102,7 +102,7 @@
 				<?php foreach($$k as $kk) : 
 					$target_label = $v->target_label;
 				?>
-					<input type="checkbox" name="<?= $k ?>[]" value="<?= $kk->id ?>" /> 
+					<input type="checkbox" name="<?= $k ?>[_ids][]" value="<?= $kk->id ?>" /> 
 					<?= $kk->$target_label ?> <br/>
 				<?php endforeach; ?>
 			<?php endforeach; ?>

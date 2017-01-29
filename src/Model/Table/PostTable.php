@@ -19,6 +19,18 @@ class PostTable extends Table
         $this->table('posts');
         $this->displayField('post_title');
         $this->primaryKey('id');
+        
+        $this->belongsToMany('Category', [
+            'joinTable' => 'categories_posts',
+            'foreignKey' => 'post_id',
+            'targetForeignKey' => 'category_id'
+        ]);
+
+        $this->belongsToMany('Tag', [
+            'joinTable' => 'posts_tags',
+            'foreignKey' => 'post_id',
+            'targetForeignKey' => 'tag_id'
+        ]);
 
     }
 
@@ -34,7 +46,7 @@ class PostTable extends Table
             'unique' => [
                 'rule' => 'validateUnique',
                 'provider' => 'table',
-                'message' => 'Post slug has already been taken.'
+                'message' => __('Post slug has already been taken.')
             ]
         ]);
 

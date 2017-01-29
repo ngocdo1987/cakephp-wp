@@ -60,12 +60,18 @@ class CrudController extends AdminController
 		$crud = $this->$model->newEntity();
 
 		if ($this->request->is('post')) {
-	    	$crud = $this->$model->patchEntity($crud, $this->request->data);
+			//print_r($this->request->data); die('');
+	    	$crud = $this->$model->patchEntity($crud, $this->request->data, [
+	    		'associated' => [
+	    			'Category', 'Tag'
+	    		]
+	    	]);
 	    	if ($this->$model->save($crud)) {
 	        	$this->Flash->success(__('Add '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);
 	      	} else {
 	      		if ($crud->errors()) {
+	      			print_r($crud->errors()); die('');
 	      			$this->set('errors', $crud->errors());
 	      		}
 	        	$this->Flash->error(__('Add '.$this->singular.' failed! Please try again!'));
@@ -106,7 +112,11 @@ class CrudController extends AdminController
 		$crud = $this->$model->get($id);
 
 	    if ($this->request->is(['patch', 'post', 'put'])) {
-	      	$crud = $this->$model->patchEntity($crud, $this->request->data);
+	      	$crud = $this->$model->patchEntity($crud, $this->request->data, [
+	      		'associated' => [
+	    			'Category', 'Tag'
+	    		]
+	      	]);
 	      	if ($this->$model->save($crud)) {
 	        	$this->Flash->success(__('Edit '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);

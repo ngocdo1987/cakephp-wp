@@ -20,6 +20,11 @@ class CategoryTable extends Table
         $this->displayField('category_name');
         $this->primaryKey('id');
 
+        $this->belongsToMany('Post', [
+            'joinTable' => 'categories_posts',
+            'foreignKey' => 'category_id',
+            'targetForeignKey' => 'post_id'
+        ]);
     }
 
     public function validationDefault(Validator $validator)
@@ -34,7 +39,7 @@ class CategoryTable extends Table
             'unique' => [
                 'rule' => 'validateUnique',
                 'provider' => 'table',
-                'message' => 'Category slug has already been taken.'
+                'message' => __('Category slug has already been taken.')
             ]
         ]);
 

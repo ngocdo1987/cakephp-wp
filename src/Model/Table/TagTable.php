@@ -20,6 +20,11 @@ class TagTable extends Table
         $this->displayField('tag_name');
         $this->primaryKey('id');
 
+        $this->belongsToMany('Post', [
+            'joinTable' => 'posts_tags',
+            'foreignKey' => 'tag_id',
+            'targetForeignKey' => 'post_id'
+        ]);
     }
 
     public function validationDefault(Validator $validator)
@@ -34,7 +39,7 @@ class TagTable extends Table
             'unique' => [
                 'rule' => 'validateUnique',
                 'provider' => 'table',
-                'message' => 'Tag slug has already been taken.'
+                'message' => __('Tag slug has already been taken.')
             ]
         ]);
 
