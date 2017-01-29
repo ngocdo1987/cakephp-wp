@@ -1,7 +1,7 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Category;
+use App\Model\Entity\Post;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -24,13 +24,19 @@ class PostTable extends Table
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('post_title')
-                ->add('post_title', [
-                    'length' => [
-                        'rule' => ['minLength', 3],
-                        'message' => 'Min length of post title is 3.'
-                    ]
-                ]);
+        $validator->notEmpty('post_title', __('Post title is required.'))
+                ->minLength('post_title', 3, __('Post title must be at least 3 characters.'));
+
+        $validator->notEmpty('post_slug', __('Post slug is required.'))
+                ->minLength('post_slug', 3, __('Post slug must be at least 3 characters.'));
+
+        $validator->add('post_slug', [
+            'unique' => [
+                'rule' => 'validateUnique',
+                'provider' => 'table',
+                'message' => 'Post slug has already been taken.'
+            ]
+        ]);
 
         return $validator;
     }

@@ -24,6 +24,20 @@ class CategoryTable extends Table
 
     public function validationDefault(Validator $validator)
     {
+        $validator->notEmpty('category_name', __('Category name is required.'))
+                ->minLength('category_name', 3, __('Category name must be at least 3 characters.'));
+
+        $validator->notEmpty('category_slug', __('Category slug is required.'))
+                ->minLength('category_slug', 3, __('Category slug must be at least 3 characters.'));
+
+        $validator->add('category_slug', [
+            'unique' => [
+                'rule' => 'validateUnique',
+                'provider' => 'table',
+                'message' => 'Category slug has already been taken.'
+            ]
+        ]);
+
         return $validator;
     }
 }

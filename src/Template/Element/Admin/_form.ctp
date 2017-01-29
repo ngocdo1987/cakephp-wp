@@ -66,6 +66,13 @@
 									break;				
 							}
 						?>
+
+						<?php if(isset($errors[$k])) : ?>
+							<?php foreach($errors[$k] as $error) : ?>
+								<font color="red"><?= $error ?></font>
+							<?php endforeach; ?>
+						<?php endif; ?>
+
 					</div>
 				</div>	
 			<?php endforeach; ?>

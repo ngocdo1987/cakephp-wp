@@ -65,6 +65,9 @@ class CrudController extends AdminController
 	        	$this->Flash->success(__('Add '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);
 	      	} else {
+	      		if ($crud->errors()) {
+	      			$this->set('errors', $crud->errors());
+	      		}
 	        	$this->Flash->error(__('Add '.$this->singular.' failed! Please try again!'));
 	      	}
 	    }
