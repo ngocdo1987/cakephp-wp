@@ -45,4 +45,14 @@ class CategoryTable extends Table
 
         return $validator;
     }
+
+    public function recursive($parent_id = 0, $prefix = '', $trees = null)
+    {
+        if(!$trees) 
+        {
+            $trees = [];
+        }
+
+        return $trees;
+    }
 }

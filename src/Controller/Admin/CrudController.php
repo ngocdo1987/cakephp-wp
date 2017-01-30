@@ -56,29 +56,36 @@ class CrudController extends AdminController
 
 	public function add()
 	{
+		$config = $this->config;
 		$model = ucfirst($this->singular);
 		$crud = $this->$model->newEntity();
-
+		//debug($config); die('');
 		if ($this->request->is('post')) {
-			//print_r($this->request->data); die('');
+			$associated = [];
+			// Check n-n
+			if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+			{
+				foreach($config->relation->nn as $k => $v)
+				{
+					$associated[] = ucfirst($k);
+				}
+			}
+
 	    	$crud = $this->$model->patchEntity($crud, $this->request->data, [
-	    		'associated' => [
-	    			'Category', 'Tag'
-	    		]
+	    		'associated' => $associated
 	    	]);
+
 	    	if ($this->$model->save($crud)) {
 	        	$this->Flash->success(__('Add '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);
 	      	} else {
 	      		if ($crud->errors()) {
-	      			print_r($crud->errors()); die('');
 	      			$this->set('errors', $crud->errors());
 	      		}
 	        	$this->Flash->error(__('Add '.$this->singular.' failed! Please try again!'));
 	      	}
 	    }
 
-	    $config = $this->config;
 	    $this->set('crud', $crud);
 	    $this->set('config', $config);
 	    $this->set('singular', $this->singular);
@@ -108,15 +115,25 @@ class CrudController extends AdminController
 
 	public function edit($id = null)
 	{
+		$config = $this->config;
 		$model = ucfirst($this->singular);
 		$crud = $this->$model->get($id);
 
 	    if ($this->request->is(['patch', 'post', 'put'])) {
+	    	$associated = [];
+			// Check n-n
+			if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+			{
+				foreach($config->relation->nn as $k => $v)
+				{
+					$associated[] = ucfirst($k);
+				}
+			}
+
 	      	$crud = $this->$model->patchEntity($crud, $this->request->data, [
-	      		'associated' => [
-	    			'Category', 'Tag'
-	    		]
+	      		'associated' => $associated
 	      	]);
+
 	      	if ($this->$model->save($crud)) {
 	        	$this->Flash->success(__('Edit '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);
@@ -125,7 +142,6 @@ class CrudController extends AdminController
 	      	}
 	    }
 
-	    $config = $this->config;
 	    $this->set('crud', $crud);
 	    $this->set('config', $config);
 	    $this->set('singular', $this->singular);
