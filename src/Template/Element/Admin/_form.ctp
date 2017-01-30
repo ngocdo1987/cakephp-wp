@@ -101,8 +101,10 @@
 
 				<?php foreach($$k as $kk) : 
 					$target_label = $v->target_label;
+					$model_ids = $k.'_ids';
+					$checked = (isset($$model_ids) && in_array($kk->id, $$model_ids)) ? ' checked="checked"' : '';
 				?>
-					<input type="checkbox" name="<?= $k ?>[_ids][]" value="<?= $kk->id ?>" /> 
+					<input type="checkbox" name="<?= $k ?>[_ids][]" value="<?= $kk->id ?>"<?= $checked ?> /> 
 					<?= $kk->$target_label ?> <br/>
 				<?php endforeach; ?>
 			<?php endforeach; ?>

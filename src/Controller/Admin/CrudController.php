@@ -13,15 +13,8 @@ class CrudController extends AdminController
 	{
 		parent::initialize();
 
-		if(file_exists('../config/cms/'.$this->singular.'.json'))
-		{
-			$config = file_get_contents('../config/cms/'.$this->singular.'.json');
-			$config = json_decode($config);
-		}
-		else
-		{
-			$config = null;
-		}
+		$cfg_file = '../config/cms/'.$this->singular.'.json';
+		$config = file_exists($cfg_file) ? json_decode(file_get_contents($cfg_file)) : null;
 		
 		$this->config = $config;
 	}
@@ -117,9 +110,39 @@ class CrudController extends AdminController
 	{
 		$config = $this->config;
 		$model = ucfirst($this->singular);
-		$crud = $this->$model->get($id);
+		$contain = [];
+
+		// Check n-n
+		if(isset($config->relation->nn) && count($config->relation->nn) > 0)
+		{
+			foreach($config->relation->nn as $k => $v)
+			{
+				$contain[] = ucfirst($k);
+			}
+		}
+
+		$crud = $this->$model->get($id, [
+			'contain' => $contain
+		]);
+
+		if(!empty($contain)) {
+			foreach($contain as $c) {
+				$_ids = [];
+				$c = strtolower($c);
+
+				if(isset($crud->$c) && !empty($crud->$c)) {
+					foreach($crud->$c as $cc) {
+						$_ids[] = $cc->id;
+					}
+				}
+
+				$this->set($c.'_ids', $_ids);
+			} 
+		}
+		//debug($crud); //die('');
 
 	    if ($this->request->is(['patch', 'post', 'put'])) {
+	    	/*
 	    	$associated = [];
 			// Check n-n
 			if(isset($config->relation->nn) && count($config->relation->nn) > 0)
@@ -129,15 +152,19 @@ class CrudController extends AdminController
 					$associated[] = ucfirst($k);
 				}
 			}
+			*/
 
 	      	$crud = $this->$model->patchEntity($crud, $this->request->data, [
-	      		'associated' => $associated
+	      		'associated' => $contain
 	      	]);
 
 	      	if ($this->$model->save($crud)) {
 	        	$this->Flash->success(__('Edit '.$this->singular.' successfully!'));
 	        	return $this->redirect(['action' => 'index']);
 	      	} else {
+	      		if ($crud->errors()) {
+	      			$this->set('errors', $crud->errors());
+	      		}
 	        	$this->Flash->error(__('Edit '.$this->singular.' failed! Please try again!'));
 	      	}
 	    }
