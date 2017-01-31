@@ -5,9 +5,9 @@ use Cake\ORM\TableRegistry;
 
 class CrudController extends AdminController 
 {
-	protected $singular = '';
-	protected $plural = '';
-	protected $config = [];
+	protected $singular;
+	protected $plural;
+	protected $config;
 
 	public function initialize()
 	{
@@ -142,18 +142,6 @@ class CrudController extends AdminController
 		//debug($crud); //die('');
 
 	    if ($this->request->is(['patch', 'post', 'put'])) {
-	    	/*
-	    	$associated = [];
-			// Check n-n
-			if(isset($config->relation->nn) && count($config->relation->nn) > 0)
-			{
-				foreach($config->relation->nn as $k => $v)
-				{
-					$associated[] = ucfirst($k);
-				}
-			}
-			*/
-
 	      	$crud = $this->$model->patchEntity($crud, $this->request->data, [
 	      		'associated' => $contain
 	      	]);
