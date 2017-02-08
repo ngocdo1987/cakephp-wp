@@ -2,7 +2,11 @@
 	$this->assign('title', 'List '.$plural);
 ?>
 
-<?php if(count($cruds) > 0 && !empty($config)) { ?>
+<p>
+    <?= $this->Html->link('ADD NEW', ['action' => 'add'], ['class' => 'btn btn-primary']) ?> 
+</p>
+
+<?php if(count($cruds) > 0 && !empty($config)) : ?>
 	<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
         <thead>
             <tr>
@@ -28,12 +32,12 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-<?php } else { ?>
+
+    <?php echo $this->element('admin/pagination'); ?>
+<?php else : ?>
 	<center>
 		<font color="red">
 			No <?= $plural ?> existed!
 		</font>
 	</center>
-<?php } ?>   
-
-<?= $this->Html->link('ADD NEW', ['action' => 'add'], ['class' => 'btn btn-primary']) ?> 
+<?php endif; ?>   
